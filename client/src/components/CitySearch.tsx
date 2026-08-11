@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Search, X } from 'lucide-react';
+import { Search, X, LoaderCircle, MapPin } from 'lucide-react';
 
 interface CitySearchProps {
   onCitySelect: (city: string) => void;
@@ -23,6 +23,10 @@ export function CitySearch({ onCitySelect, value }: CitySearchProps) {
   const suggestionsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    setInput(value);
+  }, [value]);
+
+  useEffect(() => {
     const fetchSuggestions = async () => {
       if (input.trim().length < 2) {
         setSuggestions([]);
@@ -33,13 +37,13 @@ export function CitySearch({ onCitySelect, value }: CitySearchProps) {
       setLoading(true);
       try {
         const response = await fetch(
-          `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(input)}&count=10&language=es&format=json`
+          `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(input)}&count=8&language=es&format=json`
         );
         const data = await response.json();
 
         if (data.results) {
           setSuggestions(
-            data.results.map((result: any) => ({
+            data.results.map((result: CityOption) => ({
               name: result.name,
               country: result.country,
               admin1: result.admin1,
@@ -48,9 +52,12 @@ export function CitySearch({ onCitySelect, value }: CitySearchProps) {
             }))
           );
           setShowSuggestions(true);
+        } else {
+          setSuggestions([]);
+          setShowSuggestions(true);
         }
-      } catch (error) {
-        console.error('Error fetching suggestions:', error);
+      } catch {
+        setSuggestions([]);
       } finally {
         setLoading(false);
       }
@@ -87,71 +94,69 @@ export function CitySearch({ onCitySelect, value }: CitySearchProps) {
     setInput('');
     setSuggestions([]);
     setShowSuggestions(false);
+    onCitySelect('');
     inputRef.current?.focus();
   };
 
   return (
     <div className="relative w-full">
-      <div className="relative">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground pointer-events-none" />
+      <div className="group relative flex items-center">
+        <Search className="pointer-events-none absolute left-4 h-5 w-5 text-cyan-300/70 transition-colors group-focus-within:text-cyan-200" />
         <input
           ref={inputRef}
           type="text"
           value={input}
-          onChange={(e) => setInput(e.target.value)}
+          onChange={(event) => setInput(event.target.value)}
           onFocus={() => input.trim().length >= 2 && setShowSuggestions(true)}
-          placeholder="Busca cualquier ciudad del mundo..."
-          className="w-full pl-12 pr-12 py-3 rounded-lg border border-border bg-input text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+          onKeyDown={(event) => {
+            if (event.key === 'Escape') setShowSuggestions(false);
+          }}
+          placeholder="Busca cualquier ciudad del mundo…"
+          aria-label="Buscar ciudad"
+          className="h-14 w-full rounded-xl border border-white/10 bg-white/[0.07] pl-12 pr-12 text-[0.95rem] text-white placeholder:text-slate-500 focus:border-cyan-300/50 focus:bg-white/[0.1] focus:outline-none focus:ring-4 focus:ring-cyan-300/10"
         />
-        {input && (
+        {loading && <LoaderCircle className="absolute right-4 h-5 w-5 animate-spin text-cyan-200" />}
+        {!loading && input && (
           <button
+            type="button"
             onClick={handleClear}
-            className="absolute right-4 top-1/2 -translate-y-1/2 p-1 hover:bg-muted rounded-md transition-colors"
+            className="absolute right-3 rounded-lg p-1.5 text-slate-400 hover:bg-white/10 hover:text-white"
             aria-label="Limpiar búsqueda"
           >
-            <X className="w-5 h-5 text-muted-foreground" />
+            <X className="h-4 w-4" />
           </button>
         )}
       </div>
 
-      {showSuggestions && suggestions.length > 0 && (
-        <div
-          ref={suggestionsRef}
-          className="absolute top-full left-0 right-0 mt-2 bg-card border border-border rounded-lg shadow-elevation-lg z-50 overflow-hidden"
-        >
-          <ul className="max-h-80 overflow-y-auto">
-            {suggestions.map((city, index) => (
-              <li key={`${city.name}-${city.country}-${index}`}>
-                <button
-                  onClick={() => handleSelectCity(city)}
-                  className="w-full px-4 py-3 text-left hover:bg-secondary transition-colors flex flex-col"
-                >
-                  <span className="font-medium text-foreground">
-                    {city.name}
-                    {city.admin1 && <span className="text-muted-foreground">, {city.admin1}</span>}
-                  </span>
-                  <span className="text-sm text-muted-foreground">{city.country}</span>
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      {loading && input.trim().length >= 2 && (
-        <div className="absolute top-full left-0 right-0 mt-2 bg-card border border-border rounded-lg shadow-elevation-lg z-50 p-4">
-          <div className="flex items-center justify-center gap-2">
-            <div className="w-2 h-2 bg-primary rounded-full animate-bounce" />
-            <span className="text-sm text-muted-foreground">Buscando ciudades...</span>
-          </div>
-        </div>
-      )}
-
-      {showSuggestions && suggestions.length === 0 && input.trim().length >= 2 && !loading && (
-        <div className="absolute top-full left-0 right-0 mt-2 bg-card border border-border rounded-lg shadow-elevation-lg z-50 p-4">
-          <p className="text-sm text-muted-foreground text-center">No se encontraron ciudades</p>
+      {showSuggestions && (
+        <div ref={suggestionsRef} className="glass-panel absolute left-0 right-0 top-full z-50 mt-3 overflow-hidden rounded-2xl p-2">
+          {suggestions.length > 0 ? (
+            <ul className="max-h-80 overflow-y-auto scrollbar-hidden">
+              {suggestions.map((city, index) => (
+                <li key={`${city.name}-${city.country}-${index}`}>
+                  <button
+                    type="button"
+                    onClick={() => handleSelectCity(city)}
+                    className="group flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left hover:bg-cyan-300/[0.08]"
+                  >
+                    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl border border-white/10 bg-white/[0.06] text-cyan-200 group-hover:border-cyan-300/30">
+                      <MapPin className="h-4 w-4" />
+                    </span>
+                    <span className="min-w-0">
+                      <span className="block truncate text-sm font-semibold text-white">{city.name}</span>
+                      <span className="block truncate text-xs text-slate-500">{city.admin1 ? `${city.admin1}, ` : ''}{city.country}</span>
+                    </span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          ) : !loading ? (
+            <p className="px-4 py-5 text-center text-sm text-slate-400">No encontramos esa ubicación.</p>
+          ) : null}
         </div>
       )}
     </div>
   );
 }
+
+/* Design reminder: search is the primary action. Keep it tactile, high-contrast, calm, and visually connected to the atmospheric hero. */

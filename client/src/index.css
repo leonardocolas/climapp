@@ -1,8 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
-
-/* Google Fonts - Poppins for display, Inter for body */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
 
 @custom-variant dark (&:is(.dark *));
 
@@ -46,90 +44,92 @@
 }
 
 :root {
-  /* ClimaYa Color Palette - Modern Minimalism with Atmospheric Dynamics */
-  --primary: #0EA5E9;  /* Sky blue - main brand color */
-  --primary-foreground: #FFFFFF;
-  --sidebar-primary: #0EA5E9;
-  --sidebar-primary-foreground: #FFFFFF;
-  --chart-1: #06B6D4;  /* Cyan */
-  --chart-2: #0EA5E9;  /* Sky blue */
-  --chart-3: #A855F7;  /* Purple */
-  --chart-4: #7C3AED;  /* Deep purple */
-  --chart-5: #1E40AF;  /* Deep blue */
-  --radius: 0.75rem;
-  --background: #FFFFFF;
-  --foreground: #0F172A;  /* Almost black */
-  --card: #F8FAFC;  /* Very light gray */
-  --card-foreground: #0F172A;
-  --popover: #FFFFFF;
-  --popover-foreground: #0F172A;
-  --secondary: #E0F2FE;  /* Light sky blue */
-  --secondary-foreground: #0C4A6E;  /* Dark sky blue */
-  --muted: #CBD5E1;  /* Gray */
-  --muted-foreground: #64748B;  /* Slate gray */
-  --accent: #0EA5E9;  /* Sky blue accent */
-  --accent-foreground: #FFFFFF;
-  --destructive: #EF4444;
-  --destructive-foreground: #FFFFFF;
-  --border: #E2E8F0;  /* Light border */
-  --input: #F1F5F9;  /* Input background */
-  --ring: #0EA5E9;  /* Focus ring */
-  --sidebar: #FFFFFF;
-  --sidebar-foreground: #0F172A;
-  --sidebar-accent: #0EA5E9;
-  --sidebar-accent-foreground: #FFFFFF;
-  --sidebar-border: #E2E8F0;
-  --sidebar-ring: #0EA5E9;
+  /* ClimaYa: editorial weather control room, dark ink + electric sky accents. */
+  --primary: #5ee7f5;
+  --primary-foreground: #07111f;
+  --sidebar-primary: #5ee7f5;
+  --sidebar-primary-foreground: #07111f;
+  --chart-1: #5ee7f5;
+  --chart-2: #8b8cff;
+  --chart-3: #ff9b71;
+  --chart-4: #75a9ff;
+  --chart-5: #d7e4ff;
+  --radius: 1rem;
+  --background: #07111f;
+  --foreground: #edf6ff;
+  --card: #101d2e;
+  --card-foreground: #edf6ff;
+  --popover: #101d2e;
+  --popover-foreground: #edf6ff;
+  --secondary: #16283d;
+  --secondary-foreground: #d7e4ff;
+  --muted: #31445d;
+  --muted-foreground: #90a4bf;
+  --accent: #ff9b71;
+  --accent-foreground: #07111f;
+  --destructive: #ff6b7a;
+  --destructive-foreground: #fff7f8;
+  --border: rgba(173, 211, 242, 0.14);
+  --input: rgba(255, 255, 255, 0.08);
+  --ring: #5ee7f5;
+  --sidebar: #0b1829;
+  --sidebar-foreground: #edf6ff;
+  --sidebar-accent: #16283d;
+  --sidebar-accent-foreground: #edf6ff;
+  --sidebar-border: rgba(173, 211, 242, 0.14);
+  --sidebar-ring: #5ee7f5;
 }
 
 .dark {
-  /* ClimaYa Dark Theme */
-  --primary: #0EA5E9;
-  --primary-foreground: #0F172A;
-  --sidebar-primary: #0EA5E9;
-  --sidebar-primary-foreground: #0F172A;
-  --background: #0F172A;  /* Dark navy */
-  --foreground: #F1F5F9;  /* Light gray */
-  --card: #1E293B;  /* Dark slate */
-  --card-foreground: #F1F5F9;
-  --popover: #1E293B;
-  --popover-foreground: #F1F5F9;
-  --secondary: #1E3A8A;  /* Dark blue */
-  --secondary-foreground: #E0F2FE;  /* Light sky blue */
-  --muted: #475569;  /* Gray */
-  --muted-foreground: #CBD5E1;  /* Light gray */
-  --accent: #0EA5E9;
-  --accent-foreground: #0F172A;
-  --destructive: #F87171;
-  --destructive-foreground: #0F172A;
-  --border: #334155;  /* Dark border */
-  --input: #1E293B;  /* Input background */
-  --ring: #0EA5E9;
-  --chart-1: #06B6D4;
-  --chart-2: #0EA5E9;
-  --chart-3: #A855F7;
-  --chart-4: #7C3AED;
-  --chart-5: #60A5FA;
-  --sidebar: #1E293B;
-  --sidebar-foreground: #F1F5F9;
-  --sidebar-accent: #0EA5E9;
-  --sidebar-accent-foreground: #0F172A;
-  --sidebar-border: #334155;
-  --sidebar-ring: #0EA5E9;
+  --primary: #5ee7f5;
+  --primary-foreground: #07111f;
+  --sidebar-primary: #5ee7f5;
+  --sidebar-primary-foreground: #07111f;
+  --background: #07111f;
+  --foreground: #edf6ff;
+  --card: #101d2e;
+  --card-foreground: #edf6ff;
+  --popover: #101d2e;
+  --popover-foreground: #edf6ff;
+  --secondary: #16283d;
+  --secondary-foreground: #d7e4ff;
+  --muted: #31445d;
+  --muted-foreground: #90a4bf;
+  --accent: #ff9b71;
+  --accent-foreground: #07111f;
+  --destructive: #ff6b7a;
+  --destructive-foreground: #fff7f8;
+  --border: rgba(173, 211, 242, 0.14);
+  --input: rgba(255, 255, 255, 0.08);
+  --ring: #5ee7f5;
+  --sidebar: #0b1829;
+  --sidebar-foreground: #edf6ff;
+  --sidebar-accent: #16283d;
+  --sidebar-accent-foreground: #edf6ff;
+  --sidebar-border: rgba(173, 211, 242, 0.14);
+  --sidebar-ring: #5ee7f5;
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
+  html {
+    background: #07111f;
+  }
+
   body {
     @apply bg-background text-foreground;
-    font-family: 'Inter', sans-serif;
+    font-family: 'DM Sans', sans-serif;
+    min-width: 320px;
   }
+
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: -0.035em;
   }
+
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
   [type="button"]:not(:disabled),
@@ -141,99 +141,162 @@
   input[type="radio"]:not(:disabled) {
     @apply cursor-pointer;
   }
-  
-  /* Smooth transitions for interactive elements */
+
   button, a, input, select, textarea {
-    @apply transition-all duration-200 ease-out;
+    transition: color 180ms ease, background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease, opacity 180ms ease;
   }
 
-  /* Button active state */
   button:active:not(:disabled) {
-    transform: scale(0.95);
+    transform: scale(0.97);
   }
 
-  /* Focus visible for accessibility */
   *:focus-visible {
     @apply outline-2 outline-offset-2 outline-ring;
   }
 }
 
 @layer components {
-  /**
-   * Custom container utility that centers content and adds responsive padding.
-   *
-   * This overrides Tailwind's default container behavior to:
-   * - Auto-center content (mx-auto)
-   * - Add responsive horizontal padding
-   * - Set max-width for large screens
-   *
-   * Usage: <div className="container">...</div>
-   *
-   * For custom widths, use max-w-* utilities directly:
-   * <div className="max-w-6xl mx-auto px-4">...</div>
-   */
   .container {
     width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 1rem; /* 16px - mobile padding */
-    padding-right: 1rem;
     max-width: 1440px;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
   }
 
-  .flex {
-    min-height: 0;
-    min-width: 0;
+  .glass-panel {
+    background: linear-gradient(135deg, rgba(26, 45, 69, 0.74), rgba(11, 24, 41, 0.78));
+    border: 1px solid rgba(183, 225, 247, 0.14);
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(18px);
+  }
+
+  .glass-soft {
+    background: rgba(255, 255, 255, 0.055);
+    border: 1px solid rgba(183, 225, 247, 0.12);
+    backdrop-filter: blur(14px);
+  }
+
+  .hero-noise {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .hero-noise::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.1;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.32'/%3E%3C/svg%3E");
+    mix-blend-mode: soft-light;
+  }
+
+  .eyebrow {
+    color: #5ee7f5;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.19em;
+    text-transform: uppercase;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .soft-glow {
+    box-shadow: 0 0 0 1px rgba(94, 231, 245, 0.12), 0 0 48px rgba(94, 231, 245, 0.12);
+  }
+
+  .weather-grid {
+    background-image: linear-gradient(rgba(144, 164, 191, 0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(144, 164, 191, 0.06) 1px, transparent 1px);
+    background-size: 36px 36px;
+    mask-image: linear-gradient(to bottom, black 0%, transparent 84%);
+  }
+
+  .reveal-up {
+    animation: reveal-up 650ms cubic-bezier(0.23, 1, 0.32, 1) both;
+  }
+
+  .float-slow {
+    animation: float-slow 7s ease-in-out infinite;
+  }
+
+  .drift {
+    animation: drift 18s ease-in-out infinite alternate;
+  }
+
+  .pulse-ring {
+    animation: pulse-ring 2.8s ease-in-out infinite;
+  }
+
+  .stagger-1 { animation-delay: 70ms; }
+  .stagger-2 { animation-delay: 140ms; }
+  .stagger-3 { animation-delay: 210ms; }
+  .stagger-4 { animation-delay: 280ms; }
+  .stagger-5 { animation-delay: 350ms; }
+
+  @keyframes reveal-up {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes float-slow {
+    0%, 100% { transform: translate3d(0, 0, 0) rotate(-1deg); }
+    50% { transform: translate3d(0, -10px, 0) rotate(1deg); }
+  }
+
+  @keyframes drift {
+    from { transform: translate3d(-3%, 0, 0) scale(1.04); }
+    to { transform: translate3d(3%, -2%, 0) scale(1.08); }
+  }
+
+  @keyframes pulse-ring {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(94, 231, 245, 0.16); }
+    50% { box-shadow: 0 0 0 9px rgba(94, 231, 245, 0); }
   }
 
   @media (min-width: 640px) {
-    .container {
-      padding-left: 1.5rem; /* 24px - tablet padding */
-      padding-right: 1.5rem;
-    }
+    .container { padding-inline: 1.75rem; }
   }
 
   @media (min-width: 1024px) {
-    .container {
-      padding-left: 2rem; /* 32px - desktop padding */
-      padding-right: 2rem;
-      max-width: 1440px; /* Extended content width for weather app */
+    .container { padding-inline: 2.5rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+      transition-duration: 0.01ms !important;
     }
   }
-
-  /* ClimaYa Custom Utilities - Removed conflicting font utilities */
-
-  .gradient-sky {
-    background: linear-gradient(135deg, #0EA5E9 0%, #A855F7 100%);
-  }
-
-  .gradient-sunset {
-    background: linear-gradient(135deg, #F97316 0%, #A855F7 50%, #1E40AF 100%);
-  }
-
-  .gradient-rain {
-    background: linear-gradient(135deg, #1E40AF 0%, #7C3AED 100%);
-  }
-
-  .card-glass {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-  }
-
-  .dark .card-glass {
-    background: rgba(30, 41, 59, 0.7);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  .shadow-elevation {
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  }
-
-  .shadow-elevation-lg {
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  }
-
-
 }
+
+@layer utilities {
+  .scrollbar-hidden::-webkit-scrollbar { display: none; }
+  .scrollbar-hidden { scrollbar-width: none; }
+}
+
+.dark {
+  color-scheme: dark;
+}
+
+::selection {
+  color: #07111f;
+  background: #5ee7f5;
+}
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: #07111f; }
+::-webkit-scrollbar-thumb { background: #28415d; border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: #3b5d7d; }
+
+@media (max-width: 639px) {
+  .container { padding-inline: 1rem; }
+}
+
+/* Design reminder: ClimaYa is a dark, editorial weather control room—keep contrast high, surfaces layered, and motion atmospheric rather than decorative. */
+

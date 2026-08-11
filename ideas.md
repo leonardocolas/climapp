@@ -96,3 +96,9 @@
 - Contraste mínimo AA en todos los textos
 - Focus rings visibles en todos los elementos interactivos
 - Animaciones respetan `prefers-reduced-motion`
+
+## Style Decisions
+
+La renovación final adopta un **modo atmosférico nocturno**: azul tinta como base, cyan eléctrico como señal principal y coral cálido para introducir contraste de luz. La página debe sentirse como una lectura meteorológica editorial, no como un dashboard SaaS; por eso se mantienen las capas translúcidas, pero cada bloque relevante incorpora una señal climática visible —condición, icono, temperatura, rango o patrón atmosférico—.
+
+La voz de marca queda completamente en español, cálida y clara. Se eliminan etiquetas en inglés que alejaban la experiencia de un compañero climático accesible. Los gradientes no se usan como decoración aislada: deben sugerir un mood reconocible del clima, como cielo despejado, lluvia, noche, nubosidad o atardecer. Las tarjetas de acceso se entienden como puertas a una lectura del cielo y no como simples cards de navegación.
