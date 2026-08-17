@@ -6,14 +6,14 @@ import { ForecastCards } from '@/components/ForecastCards';
 import { WeatherAdviceCard } from '@/components/WeatherAdviceCard';
 import { useWeather } from '@/hooks/useWeather';
 
-const popularCities = ['Madrid', 'Nueva York', 'Tokio', 'Ciudad de México', 'París', 'Sídney'];
+const popularCities = ['La Habana', 'Madrid', 'Nueva York', 'Tokio', 'Ciudad de México', 'París'];
 const quickLocations = [
-  { name: 'Madrid', icon: '☀️' },
+  { name: 'La Habana', icon: '☀️' },
+  { name: 'Madrid', icon: '🌤️' },
   { name: 'Nueva York', icon: '⛅' },
   { name: 'Tokio', icon: '🌧️' },
   { name: 'París', icon: '🌤️' },
   { name: 'Sídney', icon: '☀️' },
-  { name: 'Toronto', icon: '❄️' },
 ];
 
 export default function Home() {
