@@ -1,4 +1,4 @@
-# Renovación visual de ClimaYa
+# Recomendaciones Meteorológicas Personalizadas en ClimaYa
 
 - [x] Revisar la composición actual y definir la nueva dirección visual.
 - [x] Modernizar la cabecera, la marca y el fondo atmosférico.
@@ -6,20 +6,14 @@
 - [x] Dar profundidad y personalidad a las tarjetas de clima y pronóstico.
 - [x] Añadir movimiento sutil y accesible respetando prefers-reduced-motion.
 - [x] Validar la vista desktop, móvil y la búsqueda de una ciudad.
-- [ ] Guardar el checkpoint final y entregar la versión renovada.
+- [x] Crear el generador de consejos meteorológicos personalizados según temperatura, lluvia y viento.
+- [x] Integrar la tarjeta de sugerencias en la vista de clima actual.
+- [x] Validar con diferentes tipos de clima (lluvia, sol intenso, clima agradable, viento).
+- [x] Guardar checkpoint y entregar la versión definitiva.
 
-## Dirección seleccionada
-
-ClimaYa evolucionará hacia una interfaz editorial meteorológica: cielo nocturno azul tinta, acentos cyan y coral, capas translúcidas, tipografía display con carácter y una composición asimétrica que haga que el panel del clima actual se sienta como el centro de mando de la página. La renovación debe sentirse viva, pero no como una interfaz recargada o genérica.
-
-## Criterio de calidad
-
-La modernización será visible a primera vista en la composición, escala tipográfica, sistema cromático, profundidad, marca y estados interactivos. La funcionalidad de búsqueda global y el pronóstico seguirán siendo claros, accesibles y utilizables en pantallas pequeñas.
-
-## Validación
-
-Se deben probar el estado vacío, una ciudad cargada, un error de búsqueda, el autocompletado y el comportamiento responsivo antes de entregar.
-
-## Estilo
-
-Se evitarán fondos blancos planos, tarjetas uniformes, gradientes morados genéricos y layouts excesivamente centrados. Cada decisión debe reforzar la idea de una atmósfera dinámica y un producto editorial de clima.
+## Criterio de Consejo Personalizado
+El mensaje debe analizar el clima actual (temperatura, lluvia, viento, humedad) y ofrecer un consejo cercano y útil:
+- **Lluvia**: advertir sobre llevar paraguas, capa o calzado adecuado, sugiriendo planes bajo techo.
+- **Sol intenso / Calor**: sugerir protección solar, hidratación y actividades de sombra o piscina.
+- **Clima agradable / Templado**: recomendar pasear al aire libre, un café en terraza o un día de playa si el termómetro acompaña.
+- **Viento fuerte o Frío**: aconsejar abrigo por capas, cortavientos o bebidas calientes.

@@ -3,6 +3,7 @@ import { ArrowRight, Globe2, MapPin, Radio, Sparkles } from 'lucide-react';
 import { CitySearch } from '@/components/CitySearch';
 import { CurrentWeather } from '@/components/CurrentWeather';
 import { ForecastCards } from '@/components/ForecastCards';
+import { WeatherAdviceCard } from '@/components/WeatherAdviceCard';
 import { useWeather } from '@/hooks/useWeather';
 
 const popularCities = ['Madrid', 'Nueva York', 'Tokio', 'Ciudad de México', 'París', 'Sídney'];
@@ -156,6 +157,9 @@ export default function Home() {
           <div className="space-y-14 sm:space-y-20">
             <section className="reveal-up" aria-label="Clima actual">
               <CurrentWeather data={data} />
+            </section>
+            <section className="reveal-up stagger-1" aria-label="Sugerencia personalizada">
+              <WeatherAdviceCard data={data} />
             </section>
             <section className="reveal-up stagger-2" aria-label="Pronóstico extendido">
               <ForecastCards data={data} />
