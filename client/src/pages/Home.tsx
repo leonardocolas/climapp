@@ -1,5 +1,6 @@
+              <img src="/climaya-icon.png" alt="" className="h-8 w-8 object-contain" />
 import { useState } from 'react';
-import { ArrowRight, Globe2, MapPin, Radio, Sparkles } from 'lucide-react';
+import { ArrowRight, Globe2, MapPin, Radio, RefreshCw, Sparkles } from 'lucide-react';
 import { CitySearch } from '@/components/CitySearch';
 import { CurrentWeather } from '@/components/CurrentWeather';
 import { ForecastCards } from '@/components/ForecastCards';
@@ -17,11 +18,15 @@ const quickLocations = [
 ];
 
 export default function Home() {
-  const [searchCity, setSearchCity] = useState('');
-  const { data, loading, error } = useWeather(searchCity);
+  const [searchCity, setSearchCity] = useState(() => localStorage.getItem('climaya-city') || '');
+  const [unit, setUnit] = useState<'celsius' | 'fahrenheit'>('celsius');
+  const [refreshKey, setRefreshKey] = useState(0);
+  const { data, loading, error } = useWeather(searchCity, refreshKey);
 
   const handleCitySelect = (city: string) => {
     setSearchCity(city);
+    if (city) localStorage.setItem('climaya-city', city);
+    else localStorage.removeItem('climaya-city');
   };
 
   return (
@@ -38,7 +43,7 @@ export default function Home() {
         <div className="container flex min-h-[76px] items-center justify-between gap-6">
           <div className="flex items-center gap-3">
             <div className="relative grid h-10 w-10 place-items-center overflow-hidden rounded-2xl border border-white/15 bg-white/10 shadow-lg shadow-cyan-950/30">
-              <img src="/manus-storage/clima-logo_dfded397.png" alt="" className="h-8 w-8 object-contain" />
+              <img src="/climaya-icon.png" alt="" className="h-8 w-8 object-contain" />
             </div>
             <div>
               <p className="font-display text-[1.15rem] font-bold tracking-tight text-white">ClimaYa</p>
@@ -47,6 +52,11 @@ export default function Home() {
           </div>
 
           <div className="flex items-center gap-3 text-xs text-slate-400 sm:gap-5">
+            <div className="flex items-center rounded-full border border-white/10 bg-white/[0.04] p-1" aria-label="Unidad de temperatura">
+              <button type="button" onClick={() => setUnit('celsius')} className={`rounded-full px-2.5 py-1.5 font-semibold ${unit === 'celsius' ? 'bg-cyan-300 text-[#07111f]' : 'text-slate-400 hover:text-white'}`}>°C</button>
+              <button type="button" onClick={() => setUnit('fahrenheit')} className={`rounded-full px-2.5 py-1.5 font-semibold ${unit === 'fahrenheit' ? 'bg-cyan-300 text-[#07111f]' : 'text-slate-400 hover:text-white'}`}>°F</button>
+            </div>
+            {data && <button type="button" onClick={() => setRefreshKey((key) => key + 1)} disabled={loading} className="grid h-9 w-9 place-items-center rounded-full border border-white/10 bg-white/[0.04] text-slate-300 hover:border-cyan-300/40 hover:text-cyan-200 disabled:opacity-50" aria-label="Actualizar clima" title="Actualizar clima"><RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} /></button>}
             <div className="hidden items-center gap-2 md:flex">
               <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_14px_rgba(52,211,153,0.9)]" />
               Datos actualizados
@@ -63,7 +73,7 @@ export default function Home() {
         {/* Hero */}
         <section className="hero-noise relative mb-12 overflow-hidden rounded-[2rem] border border-white/10 bg-[#0c1a2b] shadow-[0_30px_100px_rgba(0,0,0,0.28)] sm:mb-16">
           <img
-            src="/manus-storage/clima-hero-bg_3e829064.png"
+            src="/weather-assets/clima-hero-bg_3e829064.png"
             alt=""
             aria-hidden="true"
             className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-[0.18] mix-blend-screen drift"
@@ -156,13 +166,13 @@ export default function Home() {
         {data && !loading && (
           <div className="space-y-14 sm:space-y-20">
             <section className="reveal-up" aria-label="Clima actual">
-              <CurrentWeather data={data} />
+              <CurrentWeather data={data} unit={unit} />
             </section>
             <section className="reveal-up stagger-1" aria-label="Sugerencia personalizada">
               <WeatherAdviceCard data={data} />
             </section>
             <section className="reveal-up stagger-2" aria-label="Pronóstico extendido">
-              <ForecastCards data={data} />
+              <ForecastCards data={data} unit={unit} />
             </section>
           </div>
         )}

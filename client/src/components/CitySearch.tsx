@@ -19,6 +19,7 @@ export function CitySearch({ onCitySelect, value }: CitySearchProps) {
   const [suggestions, setSuggestions] = useState<CityOption[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(-1);
   const inputRef = useRef<HTMLInputElement>(null);
   const suggestionsRef = useRef<HTMLDivElement>(null);
 
@@ -27,6 +28,7 @@ export function CitySearch({ onCitySelect, value }: CitySearchProps) {
   }, [value]);
 
   useEffect(() => {
+    const controller = new AbortController();
     const fetchSuggestions = async () => {
       if (input.trim().length < 2) {
         setSuggestions([]);
@@ -37,7 +39,8 @@ export function CitySearch({ onCitySelect, value }: CitySearchProps) {
       setLoading(true);
       try {
         const response = await fetch(
-          `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(input)}&count=8&language=es&format=json`
+          `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(input)}&count=8&language=es&format=json`,
+          { signal: controller.signal }
         );
         const data = await response.json();
 
@@ -56,7 +59,8 @@ export function CitySearch({ onCitySelect, value }: CitySearchProps) {
           setSuggestions([]);
           setShowSuggestions(true);
         }
-      } catch {
+      } catch (error) {
+        if (error instanceof DOMException && error.name === 'AbortError') return;
         setSuggestions([]);
       } finally {
         setLoading(false);
@@ -64,7 +68,10 @@ export function CitySearch({ onCitySelect, value }: CitySearchProps) {
     };
 
     const timer = setTimeout(fetchSuggestions, 300);
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+      controller.abort();
+    };
   }, [input]);
 
   useEffect(() => {
@@ -110,6 +117,18 @@ export function CitySearch({ onCitySelect, value }: CitySearchProps) {
           onFocus={() => input.trim().length >= 2 && setShowSuggestions(true)}
           onKeyDown={(event) => {
             if (event.key === 'Escape') setShowSuggestions(false);
+            if (event.key === 'ArrowDown' && suggestions.length) {
+              event.preventDefault();
+              setActiveIndex((index) => (index + 1) % suggestions.length);
+            }
+            if (event.key === 'ArrowUp' && suggestions.length) {
+              event.preventDefault();
+              setActiveIndex((index) => (index - 1 + suggestions.length) % suggestions.length);
+            }
+            if (event.key === 'Enter' && activeIndex >= 0 && suggestions[activeIndex]) {
+              event.preventDefault();
+              handleSelectCity(suggestions[activeIndex]);
+            }
           }}
           placeholder="Busca cualquier ciudad del mundo…"
           aria-label="Buscar ciudad"
@@ -137,7 +156,8 @@ export function CitySearch({ onCitySelect, value }: CitySearchProps) {
                   <button
                     type="button"
                     onClick={() => handleSelectCity(city)}
-                    className="group flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left hover:bg-cyan-300/[0.08]"
+                    className={`group flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left hover:bg-cyan-300/[0.08] ${activeIndex === index ? 'bg-cyan-300/[0.08]' : ''}`}
+                    aria-selected={activeIndex === index}
                   >
                     <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl border border-white/10 bg-white/[0.06] text-cyan-200 group-hover:border-cyan-300/30">
                       <MapPin className="h-4 w-4" />

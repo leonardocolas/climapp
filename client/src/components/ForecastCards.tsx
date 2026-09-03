@@ -3,7 +3,10 @@ import { ArrowUpRight, Droplets, Wind } from 'lucide-react';
 
 interface ForecastCardsProps {
   data: WeatherData;
+  unit: 'celsius' | 'fahrenheit';
 }
+
+const displayTemperature = (temperature: number, unit: ForecastCardsProps['unit']) => unit === 'fahrenheit' ? Math.round((temperature * 9) / 5 + 32) : temperature;
 
 const formatDate = (dateString: string): { weekday: string; date: string } => {
   const date = new Date(dateString + 'T00:00:00');
@@ -20,7 +23,7 @@ const getTone = (weatherCode: number) => {
   return { accent: '#8b8cff', bar: 'from-[#8b8cff] to-[#5ee7f5]' };
 };
 
-export function ForecastCards({ data }: ForecastCardsProps) {
+export function ForecastCards({ data, unit }: ForecastCardsProps) {
   const forecast = data.forecast.slice(1, 8);
   const allTemps = forecast.flatMap((day) => [day.maxTemp, day.minTemp]);
   const minRange = Math.min(...allTemps);
@@ -33,7 +36,7 @@ export function ForecastCards({ data }: ForecastCardsProps) {
           <p className="eyebrow mb-2">Lo que viene</p>
           <h2 className="text-3xl font-semibold text-white sm:text-4xl">Pronóstico extendido</h2>
         </div>
-        <p className="max-w-xs text-sm leading-6 text-slate-500 sm:text-right">Siete días para planear con una mirada. Temperaturas en grados Celsius.</p>
+        <p className="max-w-xs text-sm leading-6 text-slate-500 sm:text-right">Siete días para planear con una mirada. Temperaturas en °{unit === 'celsius' ? 'C' : 'F'}.</p>
       </div>
 
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7">
@@ -64,8 +67,8 @@ export function ForecastCards({ data }: ForecastCardsProps) {
               <p className="mt-4 min-h-10 text-xs font-medium leading-5 text-slate-300">{day.weatherDescription}</p>
 
               <div className="mt-5 flex items-end justify-between gap-2">
-                <span className="text-2xl font-semibold text-white">{day.maxTemp}°</span>
-                <span className="text-sm font-medium text-slate-500">{day.minTemp}°</span>
+                <span className="text-2xl font-semibold text-white">{displayTemperature(day.maxTemp, unit)}°</span>
+                <span className="text-sm font-medium text-slate-500">{displayTemperature(day.minTemp, unit)}°</span>
               </div>
               <div className="relative mt-3 h-1.5 rounded-full bg-white/10">
                 <div className={`absolute h-1.5 rounded-full bg-gradient-to-r ${tone.bar}`} style={{ left: `${Math.min(start, 78)}%`, width: `${Math.max(width, 18)}%` }} />

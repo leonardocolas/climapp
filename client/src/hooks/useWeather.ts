@@ -65,16 +65,18 @@ const weatherCodeDescriptions: Record<number, { description: string; icon: strin
   99: { description: 'Tormenta con granizo fuerte', icon: '⛈️' },
 };
 
-export const useWeather = (city: string) => {
+export const useWeather = (city: string, refreshKey = 0) => {
   const [data, setData] = useState<WeatherData | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    const controller = new AbortController();
+
     if (!city.trim()) {
       setData(null);
       setError(null);
-      return;
+      return () => controller.abort();
     }
 
     const fetchWeather = async () => {
@@ -84,7 +86,8 @@ export const useWeather = (city: string) => {
       try {
         // Step 1: Geocode the city name
         const geoResponse = await fetch(
-          `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=es&format=json`
+          `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=es&format=json`,
+          { signal: controller.signal }
         );
 
         if (!geoResponse.ok) {
@@ -101,7 +104,8 @@ export const useWeather = (city: string) => {
 
         // Step 2: Fetch weather data
         const weatherResponse = await fetch(
-          `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,wind_speed_10m_max&timezone=auto&forecast_days=8`
+          `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,wind_speed_10m_max&timezone=auto&forecast_days=8`,
+          { signal: controller.signal }
         );
 
         if (!weatherResponse.ok) {
@@ -157,6 +161,7 @@ export const useWeather = (city: string) => {
           forecast,
         });
       } catch (err) {
+        if (err instanceof DOMException && err.name === 'AbortError') return;
         setError(err instanceof Error ? err.message : 'Error desconocido');
         setData(null);
       } finally {
@@ -165,7 +170,8 @@ export const useWeather = (city: string) => {
     };
 
     fetchWeather();
-  }, [city]);
+    return () => controller.abort();
+  }, [city, refreshKey]);
 
   return { data, loading, error };
 };

@@ -3,16 +3,21 @@ import { WeatherData } from '@/hooks/useWeather';
 
 interface CurrentWeatherProps {
   data: WeatherData;
+  unit: 'celsius' | 'fahrenheit';
 }
 
+const displayTemperature = (temperature: number, unit: CurrentWeatherProps['unit']) => unit === 'fahrenheit' ? Math.round((temperature * 9) / 5 + 32) : temperature;
+
 const getWeatherBackground = (weatherCode: number) => {
-  if (weatherCode === 0 || weatherCode === 1) return '/manus-storage/clima-sunny-bg_26382b89.png';
-  if (weatherCode >= 51 && weatherCode <= 99) return '/manus-storage/clima-rainy-bg_00944f4f.png';
-  return '/manus-storage/clima-sunset-bg_15de83f5.png';
+  if (weatherCode === 0 || weatherCode === 1) return '/weather-assets/clima-sunny-bg_26382b89.png';
+  if (weatherCode >= 51 && weatherCode <= 99) return '/weather-assets/clima-rainy-bg_00944f4f.png';
+  return '/weather-assets/clima-sunset-bg_15de83f5.png';
 };
 
-export function CurrentWeather({ data }: CurrentWeatherProps) {
+export function CurrentWeather({ data, unit }: CurrentWeatherProps) {
   const { current, location } = data;
+  const temperature = displayTemperature(current.temperature, unit);
+  const apparentTemperature = displayTemperature(current.apparentTemperature, unit);
   const today = new Date().toLocaleDateString('es-ES', {
     weekday: 'long',
     year: 'numeric',
@@ -43,9 +48,9 @@ export function CurrentWeather({ data }: CurrentWeatherProps) {
             <div className="flex items-start gap-5">
               <div className="text-[5rem] leading-none sm:text-[7rem]" aria-hidden="true">{current.weatherIcon}</div>
               <div>
-                <p className="text-[5.3rem] font-semibold leading-[0.82] tracking-[-0.1em] text-white sm:text-[8rem]">{current.temperature}°</p>
+                <p className="text-[5.3rem] font-semibold leading-[0.82] tracking-[-0.1em] text-white sm:text-[8rem]">{temperature}°</p>
                 <p className="mt-5 text-xl font-semibold text-white sm:text-2xl">{current.weatherDescription}</p>
-                <p className="mt-2 text-sm text-slate-300">Sensación térmica de {current.apparentTemperature}°</p>
+                <p className="mt-2 text-sm text-slate-300">Sensación térmica de {apparentTemperature}°</p>
               </div>
             </div>
           </div>
@@ -53,7 +58,7 @@ export function CurrentWeather({ data }: CurrentWeatherProps) {
             <WeatherMetric icon={<Droplets />} label="Humedad" value={`${current.humidity}%`} />
             <WeatherMetric icon={<Wind />} label="Viento" value={`${current.windSpeed} km/h`} />
             <WeatherMetric icon={<Cloud />} label="Precipitación" value={`${current.precipitation.toFixed(1)} mm`} />
-            <WeatherMetric icon={<Gauge />} label="Sensación" value={`${current.apparentTemperature}°`} />
+            <WeatherMetric icon={<Gauge />} label="Sensación" value={`${apparentTemperature}°`} />
           </div>
         </div>
       </div>
