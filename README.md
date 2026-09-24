@@ -44,17 +44,6 @@ Tambien puedes usar el script estandar:
 corepack pnpm dev
 ```
 
-## Variables de entorno
-
-Las fotografias atmosfericas opcionales se sirven mediante el proxy de recursos. Para habilitarlas en desarrollo o produccion, define:
-
-```env
-STORAGE_API_URL=https://tu-servidor-de-almacenamiento.example
-STORAGE_API_KEY=tu-clave
-```
-
-El icono y el resto de recursos locales funcionan sin estas variables. No incluyas claves reales en el repositorio.
-
 ## Comprobaciones
 
 ```powershell
@@ -62,15 +51,19 @@ corepack pnpm check
 corepack pnpm build
 ```
 
-El build genera el frontend en `dist/public` y el servidor en `dist/index.js`.
+El build genera el frontend estatico en `dist/public`.
 
-## Produccion
+## Despliegue en Vercel
 
-1. Instala las dependencias con `corepack pnpm install --frozen-lockfile`.
-2. Ejecuta `corepack pnpm build`.
-3. Inicia el servidor con `corepack pnpm start`.
+Vercel debe usar estos valores:
 
-El servidor usa la variable `PORT` si esta definida; de lo contrario utiliza el puerto `3000`.
+- Install command: `pnpm install --frozen-lockfile`
+- Build command: `pnpm build`
+- Output directory: `dist/public`
+
+El archivo `vercel.json` configura el rewrite necesario para las rutas de la SPA. No se necesitan variables de entorno para el frontend.
+
+El servidor Express de `server/index.ts` se conserva para ejecuciones locales o despliegues Node independientes, pero Vercel usa directamente el frontend estatico.
 
 ## Estructura principal
 

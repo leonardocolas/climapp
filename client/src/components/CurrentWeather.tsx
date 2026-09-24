@@ -8,12 +8,6 @@ interface CurrentWeatherProps {
 
 const displayTemperature = (temperature: number, unit: CurrentWeatherProps['unit']) => unit === 'fahrenheit' ? Math.round((temperature * 9) / 5 + 32) : temperature;
 
-const getWeatherBackground = (weatherCode: number) => {
-  if (weatherCode === 0 || weatherCode === 1) return '/weather-assets/clima-sunny-bg_26382b89.png';
-  if (weatherCode >= 51 && weatherCode <= 99) return '/weather-assets/clima-rainy-bg_00944f4f.png';
-  return '/weather-assets/clima-sunset-bg_15de83f5.png';
-};
-
 export function CurrentWeather({ data, unit }: CurrentWeatherProps) {
   const { current, location } = data;
   const temperature = displayTemperature(current.temperature, unit);
@@ -40,7 +34,6 @@ export function CurrentWeather({ data, unit }: CurrentWeatherProps) {
       </div>
 
       <div className="glass-panel relative isolate overflow-hidden rounded-[2rem]">
-        <img src={getWeatherBackground(current.weatherCode)} alt="" aria-hidden="true" className="absolute inset-0 -z-10 h-full w-full object-cover opacity-30 mix-blend-screen" />
         <div className="absolute inset-0 -z-10 bg-[linear-gradient(110deg,rgba(8,22,37,0.98)_0%,rgba(8,22,37,0.76)_47%,rgba(8,22,37,0.3)_100%)]" />
         <div className="relative grid min-h-[22rem] items-center gap-10 p-7 sm:p-10 lg:grid-cols-[1fr_auto] lg:p-14">
           <div>

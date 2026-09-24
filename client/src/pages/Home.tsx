@@ -22,6 +22,7 @@ export default function Home() {
   const [unit, setUnit] = useState<'celsius' | 'fahrenheit'>('celsius');
   const [refreshKey, setRefreshKey] = useState(0);
   const { data, loading, error } = useWeather(searchCity, refreshKey);
+  const iconUrl = `${import.meta.env.BASE_URL}climaya-icon.png`;
 
   const handleCitySelect = (city: string) => {
     setSearchCity(city);
@@ -43,7 +44,7 @@ export default function Home() {
         <div className="container flex min-h-[76px] items-center justify-between gap-6">
           <div className="flex items-center gap-3">
             <div className="relative grid h-10 w-10 place-items-center overflow-hidden rounded-2xl border border-white/15 bg-white/10 shadow-lg shadow-cyan-950/30">
-              <img src="/climaya-icon.png" alt="" className="h-8 w-8 object-contain" />
+              <img src={iconUrl} alt="" className="h-8 w-8 object-contain" />
             </div>
             <div>
               <p className="font-display text-[1.15rem] font-bold tracking-tight text-white">ClimaYa</p>
@@ -72,12 +73,6 @@ export default function Home() {
       <main className="container relative py-8 sm:py-12 lg:py-16">
         {/* Hero */}
         <section className="hero-noise relative mb-12 overflow-hidden rounded-[2rem] border border-white/10 bg-[#0c1a2b] shadow-[0_30px_100px_rgba(0,0,0,0.28)] sm:mb-16">
-          <img
-            src="/weather-assets/clima-hero-bg_3e829064.png"
-            alt=""
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-[0.18] mix-blend-screen drift"
-          />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_76%_18%,rgba(94,231,245,0.24),transparent_32%),linear-gradient(120deg,rgba(7,17,31,0.98),rgba(10,28,48,0.84)_58%,rgba(35,25,64,0.78))]" />
           <div className="relative grid gap-10 px-6 py-8 sm:px-10 sm:py-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:px-14 lg:py-16">
             <div className="reveal-up max-w-2xl">
