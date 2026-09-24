@@ -203,7 +203,6 @@ export default function Home() {
 
       <footer className="border-t border-white/10 bg-[#050d18]/80">
         <div className="container flex flex-col gap-3 py-7 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
-          <p>ClimaYa — una lectura más humana del clima.</p>
           <p>Datos meteorológicos proporcionados por Open-Meteo API</p>
         </div>
       </footer>
